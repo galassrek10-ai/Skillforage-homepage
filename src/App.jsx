@@ -191,19 +191,42 @@ try {
         }
       }, [role, level, userId, db, loadHistory]);
 
-      // 4. Simulazione Chat (Mock per ora)
-      const sendMessage = () => {
-        if (!input.trim()) return;
+            // 4. Chat: invia il messaggio al proxy e mostra la risposta AI
+            const sendMessage = async () => {
+                if (!input.trim()) return;
 
-        const userMsg = { from: "user", text: input };
-        setChat((prev) => [...prev, userMsg]);
-        setInput("");
+                const messageText = input.trim();
+                const userMsg = { from: "user", text: messageText };
+                setChat((prev) => [...prev, userMsg]);
+                setInput("");
+                setIsLoading(true);
 
-        const aiResponseText = "Perfetto, procediamo con la simulazione. Il tuo cliente è molto insoddisfatto del prezzo. Come inizi la negoziazione? (Risposta simulata)";
-        setTimeout(() => {
-            setChat((prevChat) => [...prevChat, { from: "ai", text: aiResponseText }]);
-        }, 800);
-      };
+                try {
+                    const payload = {
+                        contents: [{ parts: [{ text: messageText }] }],
+                        systemInstruction: {
+                            parts: [{ text: "Sei SkillForge AI, rispondi in italiano in modo chiaro e conciso come assistente di coaching." }]
+                        }
+                    };
+
+                    const response = await fetch('/api/generate', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ model: GEMINI_MODEL, payload })
+                    });
+
+                    if (!response.ok) throw new Error(`API error ${response.status}`);
+
+                    const result = await response.json();
+                    const aiText = result?.candidates?.[0]?.content?.parts?.[0]?.text || 'Mi dispiace, non ho una risposta al momento.';
+                    setChat((prev) => [...prev, { from: 'ai', text: aiText }]);
+                } catch (err) {
+                    console.error('Chat error', err);
+                    setChat((prev) => [...prev, { from: 'ai', text: 'Errore nella generazione della risposta.' }]);
+                } finally {
+                    setIsLoading(false);
+                }
+            };
   
       const handleSignOut = () => {
           if (auth) signOut(auth).catch(e => console.error("Errore logout:", e));
