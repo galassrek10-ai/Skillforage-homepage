@@ -81,6 +81,67 @@ Nuove funzionalità verranno rilasciate continuamente.
 
 git clone [https://github.com/tuo-username/skillforge-ai.git](https://github.com/tuo-username/skillforge-ai.git)
 cd skillforge-ai
-npm install
 npm run dev
+ 
+Esecuzione locale con backend proxy e Tailwind
+
+- Installa dipendenze frontend e server:
+
+```bash
+npm install
+cd server
+npm install
+cd ..
+```
+
+- Avvia solo frontend:
+
+```bash
+npm run dev
+```
+
+- Avvia solo backend (proxy Gemini):
+
+```bash
+cd server
+npm run dev
+```
+
+- Avvia entrambi in due terminali (consigliato): frontend `npm run dev` e backend `npm run dev` dentro `server/`.
+
+Environment variables
+
+
+```bash
+export GEMINI_API_KEY="your_api_key_here"
+export GEMINI_MODEL="gemini-2.5-flash-preview-09-2025"
+```
+Windows (PowerShell)
+
+```powershell
+# Copy `.env.example` to `.env` and fill the values, or set them in the session:
+$env:GEMINI_API_KEY = 'your_api_key_here'
+$env:GEMINI_MODEL = 'gemini-2.5-flash-preview-09-2025'
+
+# Then install & run:
+# npm install
+# cd server; npm install; cd ..
+# npm run dev:all
+```
+
+Quick tip: you can copy `.env.example` to `.env` and edit it manually. The `.env` file is ignored by git.
+
+Development with Docker (hot-reload)
+
+If you prefer to run the app inside containers but keep hot-reload for development, use the provided `docker-compose.dev.yml` which mounts the source and runs Vite in dev mode:
+
+```bash
+docker compose -f docker-compose.dev.yml up --build
+
+# frontend is available at http://localhost:5173 and backend at http://localhost:4000
+```
+
+
+Nota: non inserire le chiavi nel repository. Usa variabili d'ambiente o segreti della piattaforma di deploy.
+
 
