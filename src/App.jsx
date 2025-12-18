@@ -1,26 +1,20 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { initializeApp } from "firebase/app";
 import {
-export default App;
-
-
-import React, { useEffect, useState, useCallback } from "react";
-import { initializeApp } from "firebase/app";
-import {
-    getAuth,
-    signInWithCustomToken,
-    signInAnonymously,
-    onAuthStateChanged,
-    signOut
+        getAuth,
+        signInWithCustomToken,
+        signInAnonymously,
+        onAuthStateChanged,
+        signOut
 } from "firebase/auth";
 import {
-  getFirestore,
-  collection,
-  addDoc,
-  query,
-  where,
-  getDocs,
-  serverTimestamp
+    getFirestore,
+    collection,
+    addDoc,
+    query,
+    where,
+    getDocs,
+    serverTimestamp
 } from "firebase/firestore";
 
 // --- CONFIGURAZIONE E UTILITY GLOBALI ---
@@ -341,7 +335,7 @@ try {
                                 ))
                             )}
                         </div>
-                        <input placeholder="Rispondi..." value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && sendMessage()} className={inputClasses} />
+                        <input placeholder="Rispondi..." value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && sendMessage()} className={inputClasses} />
                         <button onClick={sendMessage} className={primaryButtonClasses}>Invia Messaggio (Mock)</button>
                     </div>
                 </div>
