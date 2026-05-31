@@ -1,3 +1,10 @@
+// Locale-stable number formatter to avoid SSR/client hydration mismatches.
+const numberFormatter = new Intl.NumberFormat("en-US")
+
+export function formatNumber(n: number): string {
+  return numberFormatter.format(n)
+}
+
 export type RangeKey = "7d" | "30d" | "90d"
 
 export const ranges: { key: RangeKey; label: string }[] = [

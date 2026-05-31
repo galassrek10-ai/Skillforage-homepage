@@ -1,7 +1,7 @@
 "use client"
 
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
-import { leadChannels } from "@/lib/data"
+import { leadChannels, formatNumber } from "@/lib/data"
 
 function CustomTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null
@@ -9,7 +9,7 @@ function CustomTooltip({ active, payload, label }: any) {
     <div className="rounded-lg border border-border bg-popover px-3 py-2 text-xs shadow-lg">
       <p className="font-medium text-popover-foreground">{label}</p>
       <p className="text-muted-foreground">
-        {payload[0].value.toLocaleString()} leads
+        {formatNumber(payload[0].value)} leads
       </p>
     </div>
   )

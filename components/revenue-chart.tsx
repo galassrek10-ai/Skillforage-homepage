@@ -10,10 +10,10 @@ import {
   XAxis,
   YAxis,
 } from "recharts"
-import type { RevenuePoint } from "@/lib/data"
+import { formatNumber, type RevenuePoint } from "@/lib/data"
 
 function currency(n: number) {
-  return "$" + n.toLocaleString()
+  return "$" + formatNumber(n)
 }
 
 function CustomTooltip({ active, payload, label }: any) {

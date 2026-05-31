@@ -1,6 +1,6 @@
 "use client"
 
-import { funnel } from "@/lib/data"
+import { funnel, formatNumber } from "@/lib/data"
 
 export function ConversionFunnel() {
   const max = funnel[0].value
@@ -18,7 +18,7 @@ export function ConversionFunnel() {
               <div className="mb-1 flex items-center justify-between text-sm">
                 <span className="text-muted-foreground">{stage.stage}</span>
                 <span className="font-medium tabular-nums">
-                  {stage.value.toLocaleString()}
+                  {formatNumber(stage.value)}
                   <span className="ml-2 text-xs text-muted-foreground">{pct}%</span>
                 </span>
               </div>
